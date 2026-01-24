@@ -57,6 +57,8 @@ The project follows **Clean Architecture** principles to ensure scalability and 
 
 State management is handled using **Bloc (Cubit)**.
 
+---
+
 👨‍💻 My Role
 
 - Designed and implemented the authentication flow
@@ -71,6 +73,8 @@ State management is handled using **Bloc (Cubit)**.
 
 - Built reusable and responsive UI components
 
+---
+
 🚀 Future Improvements
 
 - Admin dashboard for managing categories and menu items
@@ -79,7 +83,9 @@ State management is handled using **Bloc (Cubit)**.
 
 - Payment integration
 
-📌 Notes
+---
+
+📌 ##Notes
 
 This project represents a real-world Flutter application structure
 and demonstrates best practices in state management and architectu
