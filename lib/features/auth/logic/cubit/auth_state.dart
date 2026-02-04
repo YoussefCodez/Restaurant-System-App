@@ -11,6 +11,8 @@ final class AuthInitial extends AuthState {}
 
 final class AuthLoading extends AuthState {}
 
+final class AuthGoogleLoading extends AuthState {}
+
 final class AuthSuccess extends AuthState {
   final UserModel user;
   const AuthSuccess({required this.user});
@@ -21,6 +23,12 @@ final class AuthLoggedIn extends AuthState {}
 final class AuthSignedOut extends AuthState {}
 
 final class AuthResetEmailSent extends AuthState {}
+
+final class UserLoaded extends AuthState {
+  final UserModel user;
+
+  const UserLoaded({required this.user});
+}
 
 final class AuthError extends AuthState {
   final String message;

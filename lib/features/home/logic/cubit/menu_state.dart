@@ -11,13 +11,9 @@ final class MenuInitial extends MenuState {}
 
 final class MenuLoading extends MenuState {}
 
-final class CategoriesLoaded extends MenuState {
-  final List<CategoryModel> categories;
-  const CategoriesLoaded({required this.categories});
-}
-
 final class MenuSuccess extends MenuState {
-  
+  final List<MenuModel> menu;
+  const MenuSuccess({required this.menu});
 }
 
 final class MenuError extends MenuState {

@@ -2,27 +2,43 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
+import 'package:restaurant/core/services/hive_service.dart';
 import 'package:restaurant/core/theme/color_manager.dart';
 import 'package:restaurant/core/utils/constants/strings_manager.dart';
 import 'package:restaurant/core/utils/responsive/device_utils.dart';
+import 'package:restaurant/core/widgets/cart.dart';
 
 class AppBarWidget extends StatelessWidget {
-  const AppBarWidget({super.key, required this.color});
+  const AppBarWidget({
+    super.key,
+    required this.color,
+    required this.scaffoldKey,
+  });
   final ColorScheme color;
+  final GlobalKey<ScaffoldState> scaffoldKey;
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Container(
-          width: DeviceUtils.isTablet(context) ? 45.w : 45.w,
-          height: DeviceUtils.isTablet(context) ? 70.h : 45.h,
-          padding: EdgeInsets.all(11.r),
-          alignment: .center,
-          decoration: BoxDecoration(
-            color: color.onPrimary,
-            borderRadius: BorderRadius.circular(50.r),
+        GestureDetector(
+          onTap: () {
+            scaffoldKey.currentState?.openDrawer();
+          },
+          child: Container(
+            width: DeviceUtils.isTablet(context) ? 45.w : 45.w,
+            height: DeviceUtils.isTablet(context) ? 70.h : 45.h,
+            padding: EdgeInsets.all(11.r),
+            alignment: .center,
+            decoration: BoxDecoration(
+              color: color.onPrimary,
+              borderRadius: BorderRadius.circular(50.r),
+            ),
+            child: SvgPicture.asset(
+              "assets/svg/menu.svg",
+              width: 18.w,
+              height: 18.h,
+            ),
           ),
-          child: SvgPicture.asset("assets/svg/menu.svg" , width: 18.w, height: 18.h, ),
         ),
         Gap(18.w),
         Expanded(
@@ -41,7 +57,11 @@ class AppBarWidget extends StatelessWidget {
               Row(
                 children: [
                   Text(
-                    "Ain Shams",
+                    HiveService().getCachedUserGovernorate() != null &&
+                            HiveService().getCachedUserAddress() != null
+                        ? "${HiveService().getCachedUserGovernorate()} , ${HiveService().getCachedUserAddress()!.substring(0, 15)}"
+                        : "Location",
+                    overflow: .ellipsis,
                     style: TextStyle(
                       fontSize: 16.sp,
                       fontWeight: .normal,
@@ -59,51 +79,7 @@ class AppBarWidget extends StatelessWidget {
             ],
           ),
         ),
-        Container(
-          width: DeviceUtils.isTablet(context) ? 45.w : 45.w,
-          height: DeviceUtils.isTablet(context) ? 70.h : 45.h,
-          padding: EdgeInsets.all(11.r),
-          alignment: .center,
-          decoration: BoxDecoration(
-            color: color.onPrimaryFixedVariant,
-            borderRadius: BorderRadius.circular(50.r),
-          ),
-          child: Stack(
-            clipBehavior: .none,
-            children: [
-              SvgPicture.asset(
-                "assets/svg/cart.svg",
-                width: 25.w,
-                height: 25.h, 
-                colorFilter: ColorFilter.mode(
-                  color.onPrimaryContainer,
-                  BlendMode.srcIn,
-                ),
-              ),
-              Positioned(
-                top: DeviceUtils.isTablet(context) ? -35.h : -18.h,
-                right: DeviceUtils.isTablet(context) ? -45.h : -18.w,
-                child: Container(
-                  width: DeviceUtils.isTablet(context) ? 30.w : 25.w,
-                  height: DeviceUtils.isTablet(context) ? 45.h : 25.h,
-                  alignment: .center,
-                  decoration: BoxDecoration(
-                    color: color.onSecondary,
-                    borderRadius: BorderRadius.circular(50.r),
-                  ),
-                  child: Text(
-                    "2",
-                    style: TextStyle(
-                      fontSize: 16.sp,
-                      color: Colors.white,
-                      fontWeight: .w900,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
+        Cart(color: color),
       ],
     );
   }

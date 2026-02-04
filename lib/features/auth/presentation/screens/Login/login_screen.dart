@@ -14,10 +14,8 @@ import 'package:restaurant/features/auth/logic/cubit/remember_me_status_cubit.da
 import 'package:restaurant/features/auth/presentation/screens/ForgotPassword/forgot_password_screen.dart';
 import 'package:restaurant/features/auth/presentation/screens/Signup/signup_screen.dart';
 import 'package:restaurant/features/auth/presentation/widgets/custom_checkbox.dart';
-import 'package:restaurant/features/auth/presentation/widgets/custom_field.dart';
-import 'package:restaurant/features/auth/presentation/widgets/custom_text.dart';
-import 'package:restaurant/features/home/data/repositories/firebase_menu_repo.dart';
-import 'package:restaurant/features/home/logic/cubit/menu_cubit.dart';
+import 'package:restaurant/core/widgets/custom_field.dart';
+import 'package:restaurant/core/widgets/custom_field_text.dart';
 import 'package:restaurant/features/home/presentation/screens/home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -115,7 +113,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Column(
                       crossAxisAlignment: .start,
                       children: [
-                        CustomText(text: StringsManager.email),
+                        CustomFieldText(text: StringsManager.email),
                         Gap(8.h),
                         CustomField(
                           hintText: StringsManager.exmapleEmail,
@@ -123,7 +121,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           validator: Valdiator.emailValidator,
                         ),
                         Gap(24.h),
-                        CustomText(text: StringsManager.password),
+                        CustomFieldText(text: StringsManager.password),
                         Gap(8.h),
                         CustomField(
                           hintText: StringsManager.obscure,
@@ -268,7 +266,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             }
                           },
                           builder: (context, state) {
-                            return state is AuthLoading
+                            return state is AuthGoogleLoading
                                 ? Center(
                                     child: CircularProgressIndicator(
                                       color: ColorsManager.primary,

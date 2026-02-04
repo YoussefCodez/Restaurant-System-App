@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:restaurant/core/utils/constants/assets_manager.dart';
@@ -17,7 +18,6 @@ class onBoardingScreen extends StatefulWidget {
   @override
   State<onBoardingScreen> createState() => _onBoardingScreenState();
 }
-
 
 class _onBoardingScreenState extends State<onBoardingScreen> {
   late PageController _controller;
@@ -45,7 +45,16 @@ class _onBoardingScreenState extends State<onBoardingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        statusBarBrightness: Brightness.dark,
+        statusBarColor: Theme.of(context).colorScheme.secondary,
+      ),
+    );
+
     return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(backgroundColor: Colors.transparent, elevation: 0),
       body: BlocProvider(
         create: (context) => IndexCubit(),
         child: BlocListener<IndexCubit, IndexState>(
@@ -110,7 +119,9 @@ class _onBoardingScreenState extends State<onBoardingScreen> {
                           GestureDetector(
                             onTap: () {
                               if (index == title.length - 1) {
-                                context.read<OnceBoardCubit>().finishOnBoarding();
+                                context
+                                    .read<OnceBoardCubit>()
+                                    .finishOnBoarding();
                                 Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
@@ -123,7 +134,11 @@ class _onBoardingScreenState extends State<onBoardingScreen> {
                                 );
                               }
                             },
-                            child: CustomButton(text: index == title.length - 1 ? "Get Started" : "Next"),
+                            child: CustomButton(
+                              text: index == title.length - 1
+                                  ? StringsManager.getStarted
+                                  : StringsManager.next,
+                            ),
                           ),
                           Gap(5.h),
                           TextButton(
@@ -136,7 +151,7 @@ class _onBoardingScreenState extends State<onBoardingScreen> {
                               );
                             },
                             child: Text(
-                              "Skip",
+                              StringsManager.skip,
                               style: TextStyle(
                                 fontSize: 14.sp,
                                 fontWeight: .normal,

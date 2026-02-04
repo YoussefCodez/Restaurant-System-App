@@ -7,11 +7,11 @@ import 'package:restaurant/core/theme/color_manager.dart';
 import 'package:restaurant/core/utils/constants/strings_manager.dart';
 import 'package:restaurant/core/utils/validators/valdiator.dart';
 import 'package:restaurant/core/widgets/custom_button.dart';
+import 'package:restaurant/core/widgets/custom_field_text.dart';
 import 'package:restaurant/features/auth/data/repositories/firebase_user_repo.dart';
 import 'package:restaurant/features/auth/logic/cubit/auth_cubit.dart';
 import 'package:restaurant/features/auth/presentation/screens/Login/login_screen.dart';
-import 'package:restaurant/features/auth/presentation/widgets/custom_field.dart';
-import 'package:restaurant/features/auth/presentation/widgets/custom_text.dart';
+import 'package:restaurant/core/widgets/custom_field.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});
@@ -122,7 +122,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     child: Column(
                       crossAxisAlignment: .start,
                       children: [
-                        CustomText(text: StringsManager.email),
+                        CustomFieldText(text: StringsManager.email),
                         Gap(8.h),
                         CustomField(
                           hintText: StringsManager.exmapleEmail,
@@ -135,9 +135,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                             if (state is AuthResetEmailSent) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
-                                  content: Text(
-                                    "Reset email sent successfully",
-                                  ),
+                                  content: Text(StringsManager.resetEmailSent),
                                 ),
                               );
                               Navigator.pushReplacement(

@@ -8,6 +8,8 @@ abstract class UserRepository {
   Future<void> signIn(String email, String password);
   Future<void> signOut();
   Future<void> setUserData(UserModel user);
+  Future<UserModel> getUserData(String uid);
   Future<void> forgotPassword(String email);
   Future<bool> signInWithGoogle();
+  Future<String> getUserName(String uid);
 }

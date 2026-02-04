@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:restaurant/core/theme/color_manager.dart';
 
 abstract class AppTheme {
-  static ThemeData ligtTheme = ThemeData(
+  static ThemeData lightTheme = ThemeData(
     scaffoldBackgroundColor: ColorsManager.backgroundLight,
     fontFamily: "main",
     colorScheme: ColorScheme.light(
@@ -11,10 +12,23 @@ abstract class AppTheme {
       secondary: ColorsManager.backgroundLight,
       onPrimary: ColorsManager.selection,
       onPrimaryFixed: ColorsManager.secondryText,
-      onPrimaryFixedVariant: ColorsManager.iconColor,
+      onPrimaryFixedVariant: ColorsManager.thirdColor,
       onPrimaryContainer: Colors.white,
       onSecondary: ColorsManager.primary,
       onSecondaryContainer: Colors.black,
+      onSecondaryFixed: const Color(0xFFeeeef0),
+      onSecondaryFixedVariant: Colors.white,
+      onSurface: Colors.black,
+    ),
+    bottomSheetTheme: const BottomSheetThemeData(
+      constraints: BoxConstraints(maxWidth: double.infinity),
+    ),
+    textTheme: TextTheme(
+      headlineMedium: TextStyle(
+        fontSize: 17.sp,
+        fontWeight: .bold,
+        color: Colors.black,
+      ),
     ),
   );
   static ThemeData darkTheme = ThemeData(
@@ -28,8 +42,21 @@ abstract class AppTheme {
       onPrimaryFixed: Colors.white,
       onPrimaryFixedVariant: ColorsManager.primary,
       onPrimaryContainer: Colors.black,
-      onSecondary: ColorsManager.iconColor,
+      onSecondary: ColorsManager.thirdColor,
       onSecondaryContainer: Colors.white,
+      onSecondaryFixed: ColorsManager.thirdColor,
+      onSecondaryFixedVariant: ColorsManager.thirdColor,
+      onSurface: ColorsManager.primary,
+    ),
+    bottomSheetTheme: const BottomSheetThemeData(
+      constraints: BoxConstraints(maxWidth: double.infinity),
+    ),
+    textTheme: TextTheme(
+      headlineMedium: TextStyle(
+        fontSize: 17.sp,
+        fontWeight: .bold,
+        color: Colors.white,
+      ),
     ),
   );
 }

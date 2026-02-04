@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:restaurant/core/services/hive_service.dart';
+import 'package:restaurant/features/auth/data/entities/user_entity.dart';
 import 'package:restaurant/features/auth/data/models/user_model.dart';
 import 'package:restaurant/features/auth/data/repositories/user_repo.dart';
 
@@ -59,15 +61,13 @@ class FirebaseUserRepo implements UserRepository {
     );
     await _firebaseAuth.signInWithCredential(credential);
     if (_firebaseAuth.currentUser != null) {
-      await usersCollection.doc(_firebaseAuth.currentUser!.uid).set(
-        {
-          "name" : _firebaseAuth.currentUser?.displayName,
-          "email" : _firebaseAuth.currentUser?.email,
-          "lastLogin" : Timestamp.now(),
-        }, SetOptions(merge: true)
-      );
+      await usersCollection.doc(_firebaseAuth.currentUser!.uid).set({
+        "name": _firebaseAuth.currentUser?.displayName,
+        "email": _firebaseAuth.currentUser?.email,
+        "lastLogin": Timestamp.now(),
+      }, SetOptions(merge: true));
     }
-    return  _firebaseAuth.currentUser != null;
+    return _firebaseAuth.currentUser != null;
   }
 
   @override
@@ -80,6 +80,38 @@ class FirebaseUserRepo implements UserRepository {
     }
   }
 
+  @override
+  Future<UserModel> getUserData(String uid) async {
+    try {
+      final doc = await usersCollection.doc(uid).get();
+      await HiveService().cacheUserName(UserModel.fromEntity(MyUserEntity.fromDocument(doc.data()!)).name);
+      return UserModel.fromEntity(MyUserEntity.fromDocument(doc.data()!));
+    } catch (e) {
+      print(e.toString());
+      rethrow;
+    }
+  }
+  @override
+  Future<String> getUserName(String uid) async {
+    try {
+      final cachedName = HiveService().getCachedUserName();
+      if (cachedName != null && cachedName.isNotEmpty) {
+        return cachedName;
+      }
+      final doc = await usersCollection.doc(uid).get();
+      if (doc.exists && doc.data() != null) {
+        final user = UserModel.fromEntity(MyUserEntity.fromDocument(doc.data()!));
+        await HiveService().cacheUserName(user.name);
+        return user.name;
+      }
+      return "";
+    } catch (e) {
+      print(e.toString());
+      rethrow;
+    }
+  }
+
+  @override
   Future<void> forgotPassword(String email) async {
     try {
       await _firebaseAuth.sendPasswordResetEmail(email: email);

@@ -12,12 +12,13 @@ class CustomField extends StatelessWidget {
     required this.controller,
     required this.validator,
     this.isPassword = false,
+    this.isEnabled = true,
   });
   final String hintText;
   final TextEditingController controller;
   final bool isPassword;
   final FormFieldValidator<String?> validator;
-
+  bool isEnabled ;
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -29,6 +30,7 @@ class CustomField extends StatelessWidget {
             controller: controller,
             obscureText: isPassword ? isPasswordObscured : false,
             obscuringCharacter: "*",
+            enabled: isEnabled,
             style: TextStyle(
               fontSize: 12.sp,
               fontWeight: .normal,
@@ -52,12 +54,16 @@ class CustomField extends StatelessWidget {
                 borderSide: BorderSide(color: Colors.red, width: 2.w),
                 borderRadius: BorderRadius.circular(10.r),
               ),
+              disabledBorder: OutlineInputBorder(
+                borderSide: BorderSide.none,
+                borderRadius: BorderRadius.circular(10.r),
+              ),
               hint: Text(
                 hintText,
                 style: TextStyle(
                   fontSize: 12.sp,
                   fontWeight: .normal,
-                  color: ColorsManager.inputsHint,
+                  color: ColorsManager.hint,
                 ),
               ),
               suffixIcon: isPassword

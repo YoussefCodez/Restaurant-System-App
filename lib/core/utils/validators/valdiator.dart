@@ -1,29 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:restaurant/core/utils/constants/strings_manager.dart';
 
 abstract class Valdiator {
   static FormFieldValidator<String?> emailValidator = (value) {
     if (value == null || value.trim().isEmpty) {
-      return "Email Can't Be Empty";
+      return StringsManager.emailEmpty;
     }
     if (!RegExp(r"^[\w-\.]+@([\w-]+\.)+[\w]{2,4}$").hasMatch(value)) {
-      return "Enter a valid email";
+      return StringsManager.validEmail;
     }
     return null;
   };
   static FormFieldValidator<String?> nameValidator = (value) {
     if (value == null || value.trim().isEmpty) {
-      return "Name Can't Be Empty";
+      return StringsManager.nameEmpty;
     }
     if (value.length > 20) {
-      return "Name Can't Be Long";
+      return StringsManager.nameLong;
     }
   };
   static FormFieldValidator<String?> passValidator = (value) {
     if (value == null || value.trim().isEmpty) {
-      return "Password cannot be empty";
+      return StringsManager.passEmpty;
     }
     if (value.length < 6) {
-      return "Password must be at least 6 characters";
+      return StringsManager.passValid;
     }
     return null;
   };

@@ -7,15 +7,11 @@ import 'package:restaurant/core/theme/color_manager.dart';
 import 'package:restaurant/core/utils/constants/strings_manager.dart';
 import 'package:restaurant/core/utils/validators/valdiator.dart';
 import 'package:restaurant/core/widgets/custom_button.dart';
+import 'package:restaurant/core/widgets/custom_field_text.dart';
 import 'package:restaurant/features/auth/data/models/user_model.dart';
-import 'package:restaurant/features/auth/data/repositories/firebase_user_repo.dart';
 import 'package:restaurant/features/auth/logic/cubit/auth_cubit.dart';
-import 'package:restaurant/features/auth/logic/cubit/obscure_cubit.dart';
 import 'package:restaurant/features/auth/presentation/screens/Login/login_screen.dart';
-import 'package:restaurant/features/auth/presentation/widgets/custom_field.dart';
-import 'package:restaurant/features/auth/presentation/widgets/custom_text.dart';
-import 'package:restaurant/features/home/data/repositories/firebase_menu_repo.dart';
-import 'package:restaurant/features/home/logic/cubit/menu_cubit.dart';
+import 'package:restaurant/core/widgets/custom_field.dart';
 import 'package:restaurant/features/home/presentation/screens/home_screen.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -113,7 +109,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   child: Column(
                     crossAxisAlignment: .start,
                     children: [
-                      CustomText(text: StringsManager.name),
+                      CustomFieldText(text: StringsManager.name),
                       Gap(8.h),
                       CustomField(
                         hintText: StringsManager.nameText,
@@ -121,7 +117,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         validator: Valdiator.nameValidator,
                       ),
                       Gap(24.h),
-                      CustomText(text: StringsManager.email),
+                      CustomFieldText(text: StringsManager.email),
                       Gap(8.h),
                       CustomField(
                         hintText: StringsManager.exmapleEmail,
@@ -129,7 +125,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         validator: Valdiator.emailValidator,
                       ),
                       Gap(24.h),
-                      CustomText(text: StringsManager.password),
+                      CustomFieldText(text: StringsManager.password),
                       Gap(8.h),
                       CustomField(
                         hintText: StringsManager.obscure,
@@ -138,7 +134,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         validator: Valdiator.passValidator,
                       ),
                       Gap(24.h),
-                      CustomText(text: StringsManager.reTypePass),
+                      CustomFieldText(text: StringsManager.reTypePass),
                       Gap(8.h),
                       CustomField(
                         hintText: StringsManager.obscure,
@@ -146,10 +142,10 @@ class _SignupScreenState extends State<SignupScreen> {
                         isPassword: true,
                         validator: (value) {
                           if (value == null || value.trim().isEmpty) {
-                            return "Please repeat password";
+                            return StringsManager.pleaseRepeatPass;
                           }
                           if (value != passController.text) {
-                            return "Passwords do not match";
+                            return StringsManager.passNotMatch;
                           }
                         },
                       ),
@@ -159,9 +155,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           if (state is AuthSuccess) {
                             Navigator.pushReplacement(
                               context,
-                              MaterialPageRoute(
-                                builder: (_) => HomeScreen(),
-                              ),
+                              MaterialPageRoute(builder: (_) => HomeScreen()),
                             );
                           } else if (state is AuthError) {
                             ScaffoldMessenger.of(context).showSnackBar(

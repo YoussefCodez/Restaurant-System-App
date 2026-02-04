@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:restaurant/core/utils/constants/strings_manager.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -64,7 +65,7 @@ class AuthCubit extends Cubit<AuthState> {
       if (success) {
         emit(AuthLoggedIn());
       } else {
-        emit(AuthError(message: "Google Sign In Failed"));
+        emit(AuthError(message: StringsManager.googleSignInFailed));
       }
     } catch (e) {
       emit(AuthError(message: e.toString()));
@@ -77,6 +78,27 @@ class AuthCubit extends Cubit<AuthState> {
       emit(AuthLoading());
       await userRepository.forgotPassword(email);
       emit(AuthResetEmailSent());
+    } catch (e) {
+      emit(AuthError(message: e.toString()));
+    }
+  }
+
+  Future<void> loadUserData() async {
+    try {
+      emit(AuthLoading());
+      final uid = FirebaseAuth.instance.currentUser!.uid;
+      final user = await userRepository.getUserData(uid);
+      emit(UserLoaded(user: user));
+    } catch (e) {
+      emit(AuthError(message: e.toString()));
+    }
+  }
+
+  Future<void> updateUserData(UserModel user) async {
+    try {
+      emit(AuthLoading());
+      await userRepository.setUserData(user);
+      emit(UserLoaded(user: user));
     } catch (e) {
       emit(AuthError(message: e.toString()));
     }

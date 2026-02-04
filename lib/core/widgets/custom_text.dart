@@ -7,8 +7,12 @@ class CustomText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      text.toUpperCase(),
-      style: TextStyle(fontSize: 11.sp, color: Colors.black, fontWeight: .w100),
+      text,
+      style: TextStyle(
+        fontSize: 20.sp,
+        fontWeight: FontWeight.normal,
+        color: Theme.of(context).colorScheme.onSecondaryContainer,
+      ),
     );
   }
 }
