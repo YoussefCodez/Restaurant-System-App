@@ -68,8 +68,6 @@ The project follows **Clean Architecture**:
 ### Presentation Layer
 
 * Screens & Widgets
-* Cubits / Bloc
-* UI State Management
 
 ### Logic Layer
 
