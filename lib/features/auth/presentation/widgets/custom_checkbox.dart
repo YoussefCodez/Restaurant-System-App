@@ -11,8 +11,7 @@ class CustomCheckbox extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        
-        context.read<RememberMeStatusCubit>().saveOnBoardingStatus();
+        context.read<RememberMeStatusCubit>().saveRememberMeStatus();
       },
       child: Container(
         padding: EdgeInsets.all(2.r),

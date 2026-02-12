@@ -5,13 +5,15 @@ import 'package:restaurant/features/payment/data/repositories/order_repo.dart';
 class FirebaseOrderRepo implements OrderRepo {
   @override
   Future<void> placeOrder(OrderModel order) async {
-    await FirebaseFirestore.instance.collection("orders").add({
+    await FirebaseFirestore.instance.collection("orders").doc(order.orderId).set({
       "userId": order.userId,
+      "orderId": order.orderId,
       "orderedAt": order.orderedAt,
-      "items": order.items.map((e) => e.toMap()).toList(),
-      "totalOrderPrice": order.totalOrderPrice,
       "status": order.status,
       "deliveryTime": order.deliveryTime,
+      "totalOrderPrice": order.totalOrderPrice,
+      "paymentMethod": order.paymentMethod,
+      "items": order.items.map((e) => e.toMap()).toList(),
     });
   }
 
@@ -25,7 +27,6 @@ class FirebaseOrderRepo implements OrderRepo {
           final orders = snapshot.docs
               .map((doc) => OrderModel.fromDocument(doc.data()))
               .toList();
-          // Local sorting to avoid need for composite index
           orders.sort((a, b) => b.orderedAt.compareTo(a.orderedAt));
           return orders;
         });

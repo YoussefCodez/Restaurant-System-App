@@ -4,6 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:restaurant/features/payment/logic/cubit/payment_select_cubit.dart';
+import 'package:uuid/uuid.dart';
 import 'package:restaurant/core/services/hive_service.dart';
 import 'package:restaurant/core/utils/constants/strings_manager.dart';
 import 'package:restaurant/core/widgets/custom_button.dart';
@@ -89,9 +91,12 @@ class PaymentButton extends StatelessWidget {
                       orderItemQuantity: item.quantity,
                     );
                   }).toList();
+                  final orderId = const Uuid().v4();
                   await context.read<OrderCubit>().placeOrder(
                     OrderModel(
                       userId: auth.user.userId,
+                      orderId: orderId,
+                      paymentMethod: context.read<PaymentSelectCubit>().state,
                       items: orderItems,
                       totalOrderPrice: orderItems.fold(
                         0,

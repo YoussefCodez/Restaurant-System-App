@@ -256,6 +256,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         BlocConsumer<AuthCubit, AuthState>(
                           listener: (context, state) {
                             if (state is AuthLoggedIn) {
+                              context
+                                  .read<RememberMeStatusCubit>()
+                                  .setRememberMe(true);
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(builder: (_) => HomeScreen()),

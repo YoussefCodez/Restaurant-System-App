@@ -3,6 +3,8 @@ import 'package:restaurant/features/payment/data/models/order_item_model.dart';
 
 class OrderModel {
   final String userId;
+  final String? orderId;
+  final String? paymentMethod;
   final num totalOrderPrice;
   final Timestamp orderedAt;
   final String? status;
@@ -11,6 +13,8 @@ class OrderModel {
 
   OrderModel({
     required this.userId,
+    required this.paymentMethod,
+    required this.orderId,
     required this.totalOrderPrice,
     required this.orderedAt,
     required this.status,
@@ -21,6 +25,8 @@ class OrderModel {
   factory OrderModel.fromDocument(Map<String, dynamic> doc) {
     return OrderModel(
       userId: doc["userId"] ?? "",
+      paymentMethod: doc["paymentMethod"] ?? "",
+      orderId: doc["orderId"] ?? "",
       totalOrderPrice: doc["totalOrderPrice"] ?? 0,
       orderedAt: doc["orderedAt"] ?? Timestamp.now().toDate(),
       status: doc["status"] ?? "",
@@ -32,6 +38,8 @@ class OrderModel {
   Map<String, dynamic> toMap() {
     return {
       "userId": userId,
+      "paymentMethod": paymentMethod,
+      "orderId": orderId,
       "totalOrderPrice": totalOrderPrice,
       "orderedAt": orderedAt,
       "status": status,

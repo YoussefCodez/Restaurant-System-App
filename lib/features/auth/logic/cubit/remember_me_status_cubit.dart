@@ -11,8 +11,12 @@ class RememberMeStatusCubit extends Cubit<bool> {
     emit(status);
   }
 
-  void saveOnBoardingStatus() {
-    emit(!state);
-    SharedPrefs.saveRememberMeStatus(state);
+  void setRememberMe(bool value) {
+    emit(value);
+    SharedPrefs.saveRememberMeStatus(value);
+  }
+
+  void saveRememberMeStatus() {
+    setRememberMe(!state);
   }
 }
