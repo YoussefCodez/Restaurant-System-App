@@ -16,7 +16,7 @@ The app provides a complete restaurant browsing experience with real-time integr
 * Save favorite meals
 * View real-time updates from Firestore
 * Enjoy a responsive and animated UI
-
+* Make an order and set it in Firestore
 ---
 
 ## ✨ Features
@@ -40,6 +40,13 @@ The app provides a complete restaurant browsing experience with real-time integr
 * Quantity increase/decrease
 * Cart stored in Firestore
 * All cart items saved in a single document
+
+### 📲 Orders
+
+* Make multiple orders
+* See a delivery status from chef
+* See a delivery time from chef
+* Order stored in Firestore
 
 ### ⚙️ Technical Features
 
@@ -87,28 +94,9 @@ State management is fully handled using **Bloc (Cubit)** to ensure separation of
 
 ---
 
-## 👨‍💻 My Role
-
-* Designed full authentication flow
-* Integrated Firebase Auth & Firestore
-* Implemented Google Sign-In
-* Built cart system with Firestore sync
-* Implemented favorites module
-* Developed category filtering logic
-* Applied Bloc/Cubit architecture
-* Built reusable components
-* Handled Stream & caching logic
-
----
-
 ## 🚀 Future Improvements
 
 * Admin dashboard to manage meals
-* Order checkout flow
-* Payment gateway
-* Order history
-* Notifications system
-* Multi-language support
 
 ---
 
